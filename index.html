@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Para a Pior Melhor Amiga 💙</title>
+  <style>
+    :root{
+      --bg1:#0a0a0a; --bg2:#1b2a41; --card:#ffffffdd; --accent:#3da9fc;
+      font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;background:linear-gradient(135deg,var(--bg1),var(--bg2));display:flex;align-items:center;justify-content:center;color:#fff}
+
+    .container{width:min(900px,95vw);padding:30px;border-radius:20px;background:rgba(255,255,255,0.08);box-shadow:0 10px 30px rgba(0,0,0,0.4);backdrop-filter:blur(6px);display:grid;grid-template-columns:280px 1fr;gap:28px;align-items:center}
+
+    .photo{border-radius:18px;overflow:hidden;box-shadow:0 6px 20px rgba(0,0,0,0.6)}
+    .photo img{width:100%;height:auto;display:block}
+
+    h1{font-size:26px;color:var(--accent);margin-bottom:10px}
+    p{font-size:16px;line-height:1.5;color:#f1f1f1;margin-bottom:12px;min-height:60px}
+
+    .btn{margin-top:10px;padding:10px 16px;border:none;border-radius:10px;background:var(--accent);color:#fff;font-size:15px;cursor:pointer;transition:transform .2s;display:none}
+    .btn.show{display:inline-block}
+    .btn:hover{transform:scale(1.05)}
+
+    .final{margin-top:20px;font-size:15px;color:#fff;font-style:italic}
+
+    /* animação de estrelas e corações */
+    .star{position:fixed;top:-10px;color:var(--accent);pointer-events:none;animation:fall 2.8s linear forwards}
+    @keyframes fall{to{transform:translateY(110vh) rotate(360deg);opacity:0}}
+
+    @media(max-width:720px){.container{grid-template-columns:1fr;padding:18px}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="photo">
+      <img src="ildinha.png" alt="Foto da amiga" />
+    </div>
+    <div class="content">
+      <h1>Para a pior melhor amiga do mundo 😅</h1>
+      <p id="text">Ok, você é a “pior”... mas também é a melhor. 💙 Obrigado por estar sempre aí, mesmo quando implico contigo.</p>
+      <button class="btn show" id="next">Clica aqui</button>
+      <button class="btn" id="magic">Surpresa especial ✨💙</button>
+      <div class="final">Eu sei que te viajo muito quando te deixam, mas te gramo muito, você sabe. 💙</div>
+    </div>
+  </div>
+
+  <script>
+    const texts = [
+      "Ok, você é a “pior”... mas também é a melhor. 💙 Obrigado por estar sempre aí, mesmo quando implico contigo.",
+      "Amizades como a nossa são raras e valem muito.",
+      "Feia, mas te gosto.",
+      "Não esquece: podes ser a pior... mas também és a melhor Sua Feia!"
+    ];
+    let index = 0;
+    const textEl = document.getElementById('text');
+    const nextBtn = document.getElementById('next');
+    const magicBtn = document.getElementById('magic');
+
+    function typeWriter(text, i = 0){
+      if(i === 0) textEl.textContent = "";
+      if(i < text.length){
+        textEl.textContent += text.charAt(i);
+        setTimeout(()=>typeWriter(text, i+1), 40);
+      }
+    }
+
+    nextBtn.addEventListener('click', ()=>{
+      index++;
+      if(index < texts.length){
+        typeWriter(texts[index]);
+      } else {
+        nextBtn.classList.remove('show');
+        magicBtn.classList.add('show');
+      }
+    });
+
+    magicBtn.addEventListener('click', ()=>{
+      for(let i=0;i<30;i++){
+        const star = document.createElement('div');
+        star.className='star';
+        star.style.left = Math.random()*100+'vw';
+        star.style.fontSize = (12+Math.random()*24)+'px';
+        star.textContent = Math.random() > 0.5 ? '★' : '💙';
+        document.body.appendChild(star);
+        setTimeout(()=>star.remove(),3000);
+      }
+    });
+  </script>
+</body>
+</html>
